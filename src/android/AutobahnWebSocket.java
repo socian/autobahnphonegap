@@ -19,14 +19,35 @@ public class AutobahnWebSocket extends CordovaPlugin{
 	
 	private CallbackContext successConnectCallback;
 
-	private WebSocket ws;
-	
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		if(ACTION_CONNECT.equals(action)) {
-			callbackContext.success();
-			return true;
+		try {
+			if(ACTION_CONNECT.equals(action)) {
+				WebSocket ws = new WebSocketConnection();
+				ws.connect("ws://192.168.2.4:8080", new WebSocketConnectionHandler() {
+					@Override
+					public void onOpen() {
+						
+					}
+
+					@Override
+					public void onTextMessage(String payload) {
+             
+					}
+
+					@Override
+					public void onClose(int code, String reason) {
+					}
+				});
+				callbackContext.success();
+				return true;
+			}
+			return false;
 		}
-		return false;
+		catch(Exception e) {
+			System.err.println("Exception: " + e.getMessage());
+	        callbackContext.error(e.getMessage());
+	        return false;
+		}
 	}
 }
