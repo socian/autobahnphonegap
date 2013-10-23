@@ -19,6 +19,8 @@ public class AutobahnWebSocket extends CordovaPlugin{
 	
 	private CallbackContext successConnectCallback;
 
+	private WebSocket ws;
+	
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		if(ACTION_CONNECT.equals(action)) {
