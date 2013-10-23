@@ -24,6 +24,8 @@ xmlns:android="http://schemas.android.com/apk/res/android"
         </config-file>
         
         <source-file src="src/android/AutobahnWebSocket.java" target-dir="src/net/socian/phonegap/wsautobahn" />
-        
+        <source-file src="src/android/autobahn.jar" target-dir="libs"/>
+        <source-file src="src/android/jackson-core-asl-1.9.7.jar" target-dir="libs"/>
+        <source-file src="src/android/jackson-mapper-asl-1.9.7.jar" target-dir="libs"/>
     </platform>
 </plugin>
