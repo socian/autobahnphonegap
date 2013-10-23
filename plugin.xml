@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+xmlns:android="http://schemas.android.com/apk/res/android"
+           id="org.apache.cordova.network-information"
+      version="0.2.3">
+
+    <name>Autobahn Web Socket</name>
+    <description>Autobahn Phonegap Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,network,information</keywords>
+    
+    <js-module src="www/autobahnws.js" name="autobahnws">
+        <clobbers target="AutobahnWebSocket" />
+    </js-module>
+
+                           
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AutobahnWebSocket">
+                <param name="android-package" value="net.socian.phonegap.wsautobahn.AutobahnWebSocket"/>
+            </feature>   
+        </config-file>
+        
+        <source-file src="src/android/AutobahnWebSocket.java" target-dir="src/net/socian/phonegap/wsautobahn" />
+        
+    </platform>
+</plugin>
