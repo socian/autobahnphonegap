@@ -7,9 +7,9 @@ function AutobahnWebSocket() {
 	this.onerror = function() {};
 	
 	this.connect = function(host) {
-		cordova.exec(_this.onopen, _this.onerror , 'AutobahnWebSocket', 'onopen', []);
-		cordova.exec(_this.onmessage, _this.onerror , 'AutobahnWebSocket', 'onmessage', []);
-		cordova.exec(_this.onopen, _this.onerror, 'AutobahnWebSocket', 'onopen', []);
+		cordova.exec(_this.onopenHandler, _this.onerrorHandler , 'AutobahnWebSocket', 'onopen', []);
+		cordova.exec(_this.onmessageHandler, _this.onerrorHandler , 'AutobahnWebSocket', 'onmessage', []);
+		cordova.exec(null, _this.onerrorHandler, 'AutobahnWebSocket', 'onerror', []);
 		
 		var param = {'wshost' : host};
 		cordova.exec(_this.onopenHandler, _this.errorHandler, 'AutobahnWebSocket', 'connect', [param]);
@@ -18,6 +18,18 @@ function AutobahnWebSocket() {
 	this.send = function(message) {
 		var param = {'wsmessage':message};
 		cordova.exec(null, this.onerror, 'AutobahnWebSocket', 'send', [param]);
+	}
+	
+	this.onopenHandler = function() {
+		_this.onopen.apply(_this.onopen, []);
+	}
+	
+	this.onmessageHandler = function(msg) {
+		_this.onmessage.apply(_this.onopen, []);
+	}
+	
+	this.onerrorHandler = function(err) {
+		_this.onerror.apply(_this.onerror, []);
 	}
 }
 module.exports = AutobahnWebSocket;
