@@ -23,8 +23,10 @@ public class AutobahnWebSocket extends CordovaPlugin{
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		try {
 			if(ACTION_CONNECT.equals(action)) {
+				JSONObject argObject = args.getJSONObject(0);
+				final String wsuri = argObject.getString("wsaddress");
 				WebSocket ws = new WebSocketConnection();
-				ws.connect("ws://192.168.2.4:8080", new WebSocketConnectionHandler() {
+				ws.connect(wsuri, new WebSocketConnectionHandler() {
 					@Override
 					public void onOpen() {
 						
