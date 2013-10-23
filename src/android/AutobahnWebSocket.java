@@ -23,26 +23,7 @@ public class AutobahnWebSocket extends CordovaPlugin{
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		try {
 			if(ACTION_CONNECT.equals(action)) {
-				JSONObject argObject = args.getJSONObject(0);
-				final String wsuri = argObject.getString("wsaddress");
-				WebSocket ws = new WebSocketConnection();
-				ws.connect(wsuri, new WebSocketConnectionHandler() {
-					@Override
-					public void onOpen() {
-						
-					}
-
-					@Override
-					public void onTextMessage(String payload) {
-             
-					}
-
-					@Override
-					public void onClose(int code, String reason) {
-					}
-				});
-				callbackContext.success();
-				return true;
+				return createWSConnection(args, callbackContext);
 			}
 			return false;
 		}
@@ -50,6 +31,35 @@ public class AutobahnWebSocket extends CordovaPlugin{
 			System.err.println("Exception: " + e.getMessage());
 	        callbackContext.error(e.getMessage());
 	        return false;
+		}
+	}
+	
+	private boolean createWSConnection(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		try {
+			JSONObject argObject = args.getJSONObject(0);
+			WebSocket ws = new WebSocketConnection();
+			final String wsuri = argObject.getString("wsaddress");
+			ws.connect(wsuri, new WebSocketConnectionHandler() {
+				@Override
+				public void onOpen() {
+					
+				}
+
+				@Override
+				public void onTextMessage(String payload) {
+         
+				}
+
+				@Override
+				public void onClose(int code, String reason) {
+				}
+			});
+			return true;
+		}
+		catch(WebSocketException e) {
+			System.err.println("Exception: " + e.getMessage());
+			callbackContext.error(e.getMessage());
+			return false;
 		}
 	}
 }
