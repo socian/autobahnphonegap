@@ -17,7 +17,7 @@ function AutobahnWebSocket() {
 	
 	this.send = function(message) {
 		var param = {'wsmessage':message};
-		cordova.exec(null, this.onerror, 'AutobahnWebSocket', 'send', [param]);
+		cordova.exec(null, _this.onerror, 'AutobahnWebSocket', 'send', [param]);
 	}
 }
 module.exports = AutobahnWebSocket;
