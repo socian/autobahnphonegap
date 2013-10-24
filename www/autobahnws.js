@@ -1,4 +1,4 @@
-function AutobahnWebSocket() {
+cordova.define("net.socian.phonegap.wsautobahn.AutobahnWebSocket.autobahnws", function(require, exports, module) {function AutobahnWebSocket() {
 	
 	var _this = this;
 	
@@ -7,12 +7,24 @@ function AutobahnWebSocket() {
 	this.onerror = function() {};
 	
 	this.connect = function(host) {
-		cordova.exec(_this.onopen, null , 'AutobahnWebSocket', 'onopen', []);
-		cordova.exec(_this.onmessage, null , 'AutobahnWebSocket', 'onmessage', []);
-		cordova.exec(null, _this.onerror, 'AutobahnWebSocket', 'onerror', []);
+		cordova.exec(_this.onopenHandler, null , 'AutobahnWebSocket', 'onopen', []);
+		cordova.exec(_this.onmessageHandler, null , 'AutobahnWebSocket', 'onmessage', []);
+		cordova.exec(null, _this.onerrorHandler, 'AutobahnWebSocket', 'onerror', []);
 		
 		var param = {'wshost' : host};
 		cordova.exec(_this.onopenHandler, _this.errorHandler, 'AutobahnWebSocket', 'connect', [param]);
+	}
+	
+	this.onopenHandler = function() {
+		_this.onopen.apply(_this.onopen, []);
+	}
+	
+	this.onmessageHandler = function(msg) {
+		_this.onmessage.apply(_this.onmessage, [msg]);
+	}
+	
+	this.onerrorHandler = function(err) {
+		_this.onerror.apply(_this.onerror, [err]);
 	}
 	
 	this.send = function(message) {
@@ -21,3 +33,4 @@ function AutobahnWebSocket() {
 	}
 }
 module.exports = AutobahnWebSocket;
+});
