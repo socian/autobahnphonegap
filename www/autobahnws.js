@@ -1,4 +1,5 @@
-cordova.define("net.socian.phonegap.wsautobahn.AutobahnWebSocket.autobahnws", function(require, exports, module) {function AutobahnWebSocket() {
+
+function AutobahnWebSocket() {
 	
 	var _this = this;
 	
@@ -33,4 +34,4 @@ cordova.define("net.socian.phonegap.wsautobahn.AutobahnWebSocket.autobahnws", fu
 	}
 }
 module.exports = AutobahnWebSocket;
-});
+
