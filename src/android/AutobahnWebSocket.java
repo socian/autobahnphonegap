@@ -15,7 +15,7 @@ import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
 
 public class AutobahnWebSocket extends CordovaPlugin implements
-		WebSocket.ConnectionHandler, Runnable {
+		WebSocket.ConnectionHandler {
 
 	public static final String ACTION_CONNECT = "connect";
 	public static final String ACTION_ONOPEN = "onopen";
@@ -55,7 +55,9 @@ public class AutobahnWebSocket extends CordovaPlugin implements
 		}
 	}
 
-	public void run() {
+	private boolean actionConnect(JSONArray args, CallbackContext callbackContext) throws JSONException {
+		JSONObject argObject = args.getJSONObject(0);
+		wsHost = argObject.getString("wshost");
 		try {
 			wsConnection = new WebSocketConnection();
 			wsConnection.connect(wsHost, this);
@@ -65,12 +67,7 @@ public class AutobahnWebSocket extends CordovaPlugin implements
 			if (onerrorConnextCallback != null)
 				onerrorConnextCallback.error(e.getMessage());
 		}
-	}
-
-	private boolean actionConnect(JSONArray args, CallbackContext callbackContext) throws JSONException {
-		JSONObject argObject = args.getJSONObject(0);
-		wsHost = argObject.getString("wshost");
-		cordova.getThreadPool().execute(this);
+		
 		return true;
 	}
 
